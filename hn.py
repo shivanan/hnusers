@@ -84,6 +84,13 @@ def updateuser(user):
 				continue
 			db.users.insert(uc)
 		if can_stop or not more_link: break
+def latestcomments(users,limit=10):
+	db = connection()
+	r = []
+	for user in users:
+		comments =  db.users.find({"$query":{"user":user},"$orderby":{"date":-1},"$limit":limit})
+		r += comments
+	return r
 #commentmap = {}
 #def loaduser(user):
 	#content = loadpage(user)
